@@ -1,0 +1,22 @@
+{
+  "name": "sync-orders-tiktok-k",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.55.0",
+    "@supabase/supabase-js": "^2.86.0",
+    "axios": "^1.13.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.2.3",
+    "p-limit": "^7.2.0",
+    "postgres": "^3.4.7"
+  }
+}
