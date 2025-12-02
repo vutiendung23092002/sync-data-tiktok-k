@@ -1,4 +1,5 @@
 import * as tiktokAPI from "../../core/tiktok-api.js";
+import * as utils from "../../utils/index.js";
 import { supabase } from "../../core/supabase-client.js";
 import { encrypt, decrypt } from "../../utils/common/AES-256-CBC.js";
 
@@ -32,7 +33,7 @@ export async function reAuthTokenTiktok(
           access_token_expire_in: res?.data?.access_token_expire_in || "",
           refresh_token: encrypt(res?.data?.refresh_token || ""),
           refresh_token_expire_in: res?.data?.refresh_token_expire_in || "",
-          update_at: new Date().toISOString()
+          update_at: utils.utcToVNTime(Math.floor(Date.now() / 1000))
         },
         { onConflict: "id" }
       )
