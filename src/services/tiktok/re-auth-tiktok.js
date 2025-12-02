@@ -32,6 +32,7 @@ export async function reAuthTokenTiktok(
           access_token_expire_in: res?.data?.access_token_expire_in || "",
           refresh_token: encrypt(res?.data?.refresh_token || ""),
           refresh_token_expire_in: res?.data?.refresh_token_expire_in || "",
+          update_at: new Date().toISOString()
         },
         { onConflict: "id" }
       )
