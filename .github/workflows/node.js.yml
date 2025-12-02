@@ -1,0 +1,49 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI re-auth tiktok shop partner center app
+
+on:
+  workflow_dispatch:
+    inputs:
+      AUTH_CODE:
+        description: "Nhập auth_code nhận từ TikTok"
+        required: true
+        type: string
+
+      CHOICE:
+        description: "1 = shop K, 2 = shop Han"
+        required: true
+        type: string
+
+
+jobs:
+  sync-job:
+    runs-on: ubuntu-latest
+    environment: re-auth_tiktok_shop_partner_center_app
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci --only=production
+
+      - name: Run re-auth-token-tiktok.js
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_SERVICE_KEY: ${{ secrets.DATABASE_SERVICE_KEY }}
+          AES_256_CBC_APP_SECRET_KEY: ${{ secrets.AES_256_CBC_APP_SECRET_KEY }}
+          TIKTOK_PARTNER_APP_KEY_7561567100864644872: ${{ secret.TIKTOK_PARTNER_APP_KEY_7561567100864644872 }}
+          TIKTOK_PARTNER_APP_SECRET_7561567100864644872: ${{ secret.TIKTOK_PARTNER_APP_SECRET_7561567100864644872 }}
+          TIKTOK_PARTNER_APP_KEY_7527154834987157254: ${{ secret.TIKTOK_PARTNER_APP_KEY_7527154834987157254 }}
+          TIKTOK_PARTNER_APP_SECRET_7527154834987157254: ${{ secret.TIKTOK_PARTNER_APP_SECRET_7527154834987157254 }}
+          AUTH_CODE: ${{ inputs.AUTH_CODE }}
+          CHOICE: ${{ inputs.CHOICE }}
+
+        run: node re-auth-token-tiktok.js
