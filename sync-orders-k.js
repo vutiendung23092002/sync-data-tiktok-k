@@ -7,7 +7,14 @@ import { getAllCostMap } from "./src/services/kiot/get-all-cost-map.js";
 import { syncDataToLarkBaseFilterDate } from "./src/services/larkbase/index.js";
 import * as utils from "./src/utils/index.js";
 
-async function syncOrdersTiktok(baseId, tableOrdersName, tableOrderItemsName, from, to) {
+async function syncOrdersTiktok(
+  baseId,
+  tableOrdersName,
+  tableOrderItemsName,
+  from,
+  to
+) {
+  console.log(`Đồng bộ đơn hàng từ ngày ${from} đến ${to}`);
   const {
     newMap: newCostMap,
     oldMap: oldCostMap,
@@ -56,7 +63,9 @@ async function syncOrdersTiktok(baseId, tableOrdersName, tableOrderItemsName, fr
   //   allOrderItems
   // );
 
-  console.log(`Lấy được ${allOrders.length} đơn hàng | ${allOrderItems.length} item đơn hàng!\n`);
+  console.log(
+    `Lấy được ${allOrders.length} đơn hàng | ${allOrderItems.length} item đơn hàng!\n`
+  );
 
   const larkOrdersClient = await createLarkClient(
     env.LARK.tiktok_k_orders_items.app_id,
@@ -103,4 +112,14 @@ async function syncOrdersTiktok(baseId, tableOrdersName, tableOrderItemsName, fr
   );
 }
 
-syncOrdersTiktok();
+const baseId = process.env.BASE_ID_TMDT;
+
+const tableOrdersName = process.env.TABLE_ORDERS_NAME;
+const tableOrderItemsName = process.env.TABLE_ORDER_ITEMS_NAME;
+
+// input hoặc env đều đã có yyyy/mm/dd
+const from = process.env.FROM ? `${process.env.FROM} 00:00:00` : null;
+
+const to = process.env.TO ? `${process.env.TO} 23:59:59` : null;
+
+syncOrdersTiktok(baseId, tableOrdersName, tableOrderItemsName, from, to);
