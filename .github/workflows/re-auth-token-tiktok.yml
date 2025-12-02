@@ -20,7 +20,7 @@ on:
 jobs:
   sync-job:
     runs-on: ubuntu-latest
-    environment: re-auth_tiktok_shop_partner_center_app
+    environment: sync-data-tiktok-k
 
     steps:
       - name: Checkout source
