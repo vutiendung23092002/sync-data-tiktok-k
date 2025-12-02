@@ -47,6 +47,12 @@ jobs:
 
       - name: Run re-auth-token-tiktok.js
         env:
+          KIOTVIET_RETAILER: ${{ secrets.KIOTVIET_RETAILER }}
+          KIOT_CLIENT_ID: ${{ secrets.KIOT_CLIENT_ID }}
+          KIOT_SECRET: ${{ secrets.KIOT_SECRET }}
+          KIOTVIET_RETAILER_OLD: ${{ secrets.KIOTVIET_RETAILER_OLD}}
+          KIOT_CLIENT_ID_OLD: ${{ secrets.KIOT_CLIENT_ID_OLD }}
+          KIOT_SECRET_OLD: ${{ secrets.KIOT_SECRET_OLD}}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_SERVICE_KEY: ${{ secrets.DATABASE_SERVICE_KEY }}
           AES_256_CBC_APP_SECRET_KEY: ${{ secrets.AES_256_CBC_APP_SECRET_KEY }}
