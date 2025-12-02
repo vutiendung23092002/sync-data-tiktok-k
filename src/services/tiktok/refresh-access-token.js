@@ -16,7 +16,6 @@ export async function checkAndRefreshAllTokens(appKey, appSecret, dbName, id) {
     resSeclect?.access_token_expire_in &&
     Number(resSeclect?.access_token_expire_in) - now > 300
   ) {
-    console.log("[Access token vẫn còn sống, bỏ qua.]");
     return utils.decrypt(resSeclect.access_token);
   }
 

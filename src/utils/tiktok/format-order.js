@@ -1,6 +1,6 @@
 // import { utcToVNTime } from "./timeHelper.js";
 // import { generateHash } from "../utils/generateHash.js";
-import * as utils from "../index.js"
+import * as utils from "../index.js";
 
 /**
  * Định dạng lại dữ liệu đơn hàng TikTok
@@ -14,14 +14,17 @@ export function formatTikTokOrder(order = {}) {
     id: `${order.id || ""}${order.shop_id ? "_" + order.shop_id : ""}`,
     order_id: order.id || "",
     tracking_number: order.tracking_number || "",
-    create_time: order.create_time ? utils.utcToVNTime(order.create_time) : null,
+    create_time: order.create_time
+      ? utils.utcToVNTime(order.create_time)
+      : null,
     paid_time: order.paid_time ? utils.utcToVNTime(order.paid_time) : null,
     status: order.status || order.status || "",
     total_amount: order.payment?.total_amount ?? 0,
     sub_total: order.payment?.sub_total ?? 0,
     platform_discount: order.payment?.platform_discount ?? 0,
     seller_discount: order.payment?.seller_discount ?? 0,
-    original_total_product_price: order.payment?.original_total_product_price ?? 0,
+    original_total_product_price:
+      order.payment?.original_total_product_price ?? 0,
     shipping_fee: order.payment?.shipping_fee ?? 0,
     cancel_reason: order.cancel_reason || "",
     tax: order.payment?.tax ?? 0,
@@ -29,12 +32,20 @@ export function formatTikTokOrder(order = {}) {
     shop_name: order.shop_name || "",
     handling_fee: order.payment?.handling_fee ?? 0,
     fulfillment_type: order.fulfillment_type || "",
-    cancel_order_sla_time: order.cancel_order_sla_time ? utils.utcToVNTime(order.cancel_order_sla_time) : null,
+    cancel_order_sla_time: order.cancel_order_sla_time
+      ? utils.utcToVNTime(order.cancel_order_sla_time)
+      : null,
     cancellation_initiator: order.cancellation_initiator || "",
     packages: order.packages || [],
-    cancel_time: order.cancel_time ? utils.utcToVNTime(order.cancel_time) : null,
-    delivery_due_time: order.delivery_due_time ? utils.utcToVNTime(order.delivery_due_time) : null,
-    delivery_time: order.delivery_time ? utils.utcToVNTime(order.delivery_time) : null,
+    cancel_time: order.cancel_time
+      ? utils.utcToVNTime(order.cancel_time)
+      : null,
+    delivery_due_time: order.delivery_due_time
+      ? utils.utcToVNTime(order.delivery_due_time)
+      : null,
+    delivery_time: order.delivery_time
+      ? utils.utcToVNTime(order.delivery_time)
+      : null,
     commerce_platform: order.commerce_platform || "",
   };
 
@@ -54,13 +65,15 @@ export function formatTikTokOrder(order = {}) {
  * @param {string} shopName - Tên shop
  * @returns {Object} formatted item
  */
-export function formatTikTokOrderItem(item = {}, order = {}) {
+export function formatTikTokOrderItem(item = {}, order = {}, productCostMap) {
   const formattedItem = {
     id: `${item.id || ""}${order.shop_id ? "_" + order.shop_id : ""}`,
     item_id: item.id || "",
     order_id: order.id || "",
     tracking_number: item.tracking_number || "",
-    create_time: order.create_time ? utils.utcToVNTime(order.create_time) : null,
+    create_time: order.create_time
+      ? utils.utcToVNTime(order.create_time)
+      : null,
     sku_id: item.sku_id || "",
     seller_sku: item.seller_sku || "",
     product_name: item.product_name || "",
@@ -74,10 +87,13 @@ export function formatTikTokOrderItem(item = {}, order = {}) {
     gift_retail_price: Number(item.gift_retail_price || 0),
   };
 
+  const cost = productCostMap?.[item?.seller_sku] ?? null;
+
   const itemHash = utils.generateHash(formattedItem);
 
   return {
     ...formattedItem,
+    cost: cost,
     hash: itemHash,
   };
 }

@@ -2,7 +2,7 @@ import http from "./http-client.js";
 import {
   TIKTOK_AUTH_URL,
   TIKTOK_BASE_URL,
-  API_PATHS,
+  API_PATHS_TIKTOK,
 } from "../config/constants.js";
 import { generateTikTokSignSmart } from "../utils/tiktok/generate-sign.js";
 
@@ -18,7 +18,7 @@ import { generateTikTokSignSmart } from "../utils/tiktok/generate-sign.js";
  * @returns {Promise<Object>} Dữ liệu token: access_token, refresh_token, expiry,...
  */
 export async function getTikTokAccessToken(params) {
-  const res = await http.get(API_PATHS.TIKTOK_GET_TOKEN, {
+  const res = await http.get(API_PATHS_TIKTOK.TIKTOK_GET_TOKEN, {
     baseURL: TIKTOK_AUTH_URL,
     params,
   });
@@ -37,7 +37,7 @@ export async function getTikTokAccessToken(params) {
  * @returns {Promise<Object>} Token mới.
  */
 export async function refreshTikTokAccessToken(params) {
-  const res = await http.get(API_PATHS.TIKTOK_REFRESH_TOKEN, {
+  const res = await http.get(API_PATHS_TIKTOK.TIKTOK_REFRESH_TOKEN, {
     baseURL: TIKTOK_AUTH_URL,
     params,
   });
@@ -70,72 +70,29 @@ export async function getAuthorizedShops(headers, params, path) {
 /**
  * Tìm kiếm danh sách đơn hàng (order/search).
  *
- * @param {string} accessToken - Token truy cập shop.
- * @param {string} appKey - App Key TikTok.
- * @param {string} appSecret - App Secret TikTok.
- * @param {number} pageSize - Số bản ghi mỗi trang.
- * @param {string} sortOrder - ASC hoặc DESC.
- * @param {string|null} pageToken - Page token để load trang tiếp theo.
- * @param {string} sortField - Trường sắp xếp (vd: create_time).
- * @param {string} shopCipher - Mã cipher của shop.
- * @param {number} createTimeGe - Timestamp >=.
- * @param {number} createTimeLt - Timestamp <.
+ * @param {string} path - path của endpoint get order list.
+ * @param {JSON} params 
+ *               app_key: App Key TikTok Shop,
+ *               timestamp: current time,
+ *               sort_order: "DESC" sắp xếp theo sort_field từ lớn - bé (ASC ngc lại),
+ *               sort_field: "create_time" - chỉ định sắp xếp theo create time,
+ *               shop_cipher: shop.cipher - mã cipher của shop,
+ *               page_token: id của trang cần lấy (100 order 1 trang)
+ *               sign: chữ ký
+ * @param {JSON} headers 
+ *               "x-tts-access-token": access_token tiktok shop,
+ *               "Content-Type": "application/json",
+ * @param {JSON} body
+ *               create_time_ge: lấy từ thời gian (from) - timestamp
+ *               create_time_lt: đến thời gian (to) - timestamp
  * @returns {Promise<Object>} Danh sách đơn hàng.
- * @throws {Error} Nếu API trả lỗi.
  */
-export async function getOrdersList(
-  accessToken,
-  appKey,
-  appSecret,
-  pageSize,
-  sortOrder,
-  pageToken,
-  sortField,
-  shopCipher,
-  createTimeGe,
-  createTimeLt
-) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS.TIKTOK_ORDER_SEARCH;
-  const params = {
-    app_key: appKey,
-    timestamp,
-    page_size: pageSize,
-    sort_order: sortOrder,
-    sort_field: sortField,
-    shop_cipher: shopCipher,
-  };
-
-  if (pageToken) params.page_token = pageToken;
-
-  const body = {
-    create_time_ge: createTimeGe,
-    create_time_lt: createTimeLt,
-  };
-
-  const sign = generateTikTokSignSmart({
-    appSecret,
-    path,
-    params,
-    body,
-    method: "POST",
-  });
-
+export async function getOrdersList(path, params, headers, body) {
   const res = await http.post(path, body, {
     baseURL: TIKTOK_BASE_URL,
-    headers: {
-      "x-tts-access-token": accessToken,
-      "Content-Type": "application/json",
-    },
-    params: { ...params, sign },
+    headers: headers,
+    params: params,
   });
-
-  if (!res || res.code !== 0) {
-    const msg = res?.message || "Unknown TikTok API error";
-    console.error(`Lỗi khi gọi orders/search: ${msg}`);
-    console.log("TikTok response:", JSON.stringify(res, null, 2));
-    throw new Error(`Lỗi khi lấy danh sách đơn hàng: ${msg}`);
-  }
 
   return res;
 }
@@ -168,7 +125,7 @@ export async function getStatements(
   statementTimeLt
 ) {
   const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS.TIKTOK_FINANCE_STATEMENT;
+  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_STATEMENT;
   const params = {
     app_key: appKey,
     timestamp,
@@ -224,7 +181,7 @@ export async function getTransactionByStatement(
   statementId
 ) {
   const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS.TIKTOK_FINANCE_TRANSACTION_BY_STATEMENT.replace(
+  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_TRANSACTION_BY_STATEMENT.replace(
     "{statement_id}",
     statementId
   );
@@ -274,7 +231,7 @@ export async function getTransactionByOrder(
   orderId
 ) {
   const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS.TIKTOK_FINANCE_TRANSACTION_BY_ORDER.replace(
+  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_TRANSACTION_BY_ORDER.replace(
     "{order_id}",
     orderId
   );
@@ -329,7 +286,7 @@ export async function searchReturns(
   createTimeLt
 ) {
   const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS.TIKTOK_SEARCH_RETURNS_REFUND;
+  const path = API_PATHS_TIKTOK.TIKTOK_SEARCH_RETURNS_REFUND;
 
   const params = {
     app_key: appKey,

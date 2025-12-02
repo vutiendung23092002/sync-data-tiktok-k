@@ -1,34 +1,19 @@
-/**
- * URL dùng cho quy trình OAuth của TikTok Shop (Partner API).
- * Dùng để lấy token, refresh token, uỷ quyền shop.
- * @type {string}
- */
 export const TIKTOK_AUTH_URL = "https://auth.tiktok-shops.com";
-
-/**
- * Base URL cho TikTok Shop Partner API toàn cầu.
- * Tất cả request chính của Partner API sẽ dùng base này.
- * @type {string}
- */
 export const TIKTOK_BASE_URL = "https://open-api.tiktokglobalshop.com";
-
-/**
- * Base URL cho TikTok Business/Ads API.
- * Dùng để lấy quảng cáo, business center, báo cáo GMV Max...
- * @type {string}
- */
 export const TIKTOK_ADS_BASE_URL =
   "https://business-api.tiktok.com/open_api/v1.3";
 
-/**
- * Tập hợp các endpoint của TikTok Shop Partner API và TikTok Ads API.
- * Dùng để xây URL request bằng cách nối với BASE_URL tương ứng.
- *
- * @type {Object.<string, string>}
- */
-export const API_PATHS = {
-  // Partner API (Shop)
+export const KIOT_AUTH_URL = "https://id.kiotviet.vn/connect";
+export const KIOT_PUBLIC_URL = "https://public.kiotapi.com";
 
+export const API_PATHS_KIOT = {
+  GET_ACCESS_TOKEN: "/token",
+  GET_INVOICES: "/invoices",
+  GET_PRICEBOOKS: "/pricebooks",
+  GET_PRODUCTS: "/products",
+};
+
+export const API_PATHS_TIKTOK = {
   /** Lấy access_token từ auth code */
   TIKTOK_GET_TOKEN: "/api/v2/token/get",
 

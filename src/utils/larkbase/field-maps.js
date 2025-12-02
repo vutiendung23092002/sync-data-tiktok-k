@@ -138,6 +138,7 @@ export const ORDER_ITEM_FIELD_MAP = {
   seller_discount: "Giảm giá người bán",
   original_price: "Giá gốc",
   sale_price: "Giá bán sản phẩm",
+  cost: "Giá vốn",
   hash: "hash",
   id: "ID định danh (TTS)",
 };
@@ -161,6 +162,7 @@ export const ORDER_ITEM_TYPE_MAP = {
   seller_discount: 2,
   original_price: 2,
   sale_price: 2,
+  cost: 2,
   hash: 1,
   id: 1,
 };
@@ -181,6 +183,7 @@ export const ORDER_ITEM_UI_TYPE_MAP = {
   seller_discount: "Currency",
   original_price: "Currency",
   sale_price: "Currency",
+  cost: "Currency",
   hash: "Text",
   id: "Text",
 };
