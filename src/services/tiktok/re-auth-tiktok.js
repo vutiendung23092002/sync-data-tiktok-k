@@ -19,7 +19,6 @@ export async function reAuthTokenTiktok(
     };
 
     const res = await tiktokAPI.getTikTokAccessToken(params);
-    console.log("🔥 ReAuth OK:", res);
 
     const { data, error } = await supabase
       .from("envCloud")
