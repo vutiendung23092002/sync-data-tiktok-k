@@ -11,7 +11,6 @@ export function vnTimeToUTCTimestampMiliseconds(datetimeStr) {
   return new Date(iso).getTime();
 }
 
-
 /**
  * Parse chuỗi ngày dạng "YYYY/MM/DD" hoặc "YYYY-MM-DD" thành đối tượng Date.
  * - Không đổi timezone, dùng local timezone của máy chạy code.
@@ -23,7 +22,6 @@ function parseDateInput(inputStr) {
   const dt = new Date(inputStr.replace(/\//g, "-"));
   return dt;
 }
-
 
 /**
  * Convert date thành format "YYYY-MM-DD" để gọi TikTok GMV API.
@@ -74,30 +72,15 @@ export function vnTimeToUtcTimestamp(datetimeStr) {
   return Math.floor(utcMillis / 1000);
 }
 
-
-export function utcTimestampToVn(utcSec) {
-  const d = new Date(utcSec * 1000); // luôn hiểu đúng UTC
+export function utcTimestampToVn(ts) {
+  const d = new Date(ts * 1000);
 
   const yyyy = d.getUTCFullYear();
   const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
   const dd = String(d.getUTCDate()).padStart(2, "0");
-
-  // Giờ VN = UTC + 7, KHÔNG phụ thuộc timezone máy
-  let hh = d.getUTCHours() + 7;
-  let day = dd;
-  let date = d;
-
-  if (hh >= 24) {
-    hh -= 24;
-
-    // nhảy sang ngày hôm sau
-    const next = new Date(date.getTime() + 24 * 3600 * 1000);
-    day = String(next.getUTCDate()).padStart(2, "0");
-  }
-
-  hh = String(hh).padStart(2, "0");
+  const hh = String(d.getUTCHours()).padStart(2, "0");
   const mi = String(d.getUTCMinutes()).padStart(2, "0");
   const ss = String(d.getUTCSeconds()).padStart(2, "0");
 
-  return `${yyyy}/${mm}/${day} ${hh}:${mi}:${ss}`;
+  return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
 }
