@@ -75,25 +75,29 @@ export function vnTimeToUtcTimestamp(datetimeStr) {
 }
 
 
-/**
- * Chuyển timestamp UTC (giây) thành thời gian VIỆT NAM (UTC+7).
- * - Hàm cộng thêm 7 giờ.
- * - Trả về chuỗi "YYYY/MM/DD HH:mm:ss".
- *
- * @param {number} utcSec Timestamp UTC giây.
- * @returns {string} Chuỗi thời gian giờ VN.
- */
-export function utcTimestampToVnMutilTimezone(utcSec) {
-  const date = new Date(utcSec * 1000);
-  const vnMillis = date.getTime() + 7 * 3600 * 1000;
-  const vn = new Date(vnMillis);
+export function utcTimestampToVn(utcSec) {
+  const d = new Date(utcSec * 1000); // luôn hiểu đúng UTC
 
-  const yyyy = vn.getUTCFullYear();
-  const mm = String(vn.getUTCMonth() + 1).padStart(2, "0");
-  const dd = String(vn.getUTCDate()).padStart(2, "0");
-  const hh = String(vn.getUTCHours()).padStart(2, "0");
-  const mi = String(vn.getUTCMinutes()).padStart(2, "0");
-  const ss = String(vn.getUTCSeconds()).padStart(2, "0");
+  const yyyy = d.getUTCFullYear();
+  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(d.getUTCDate()).padStart(2, "0");
 
-  return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
+  // Giờ VN = UTC + 7, KHÔNG phụ thuộc timezone máy
+  let hh = d.getUTCHours() + 7;
+  let day = dd;
+  let date = d;
+
+  if (hh >= 24) {
+    hh -= 24;
+
+    // nhảy sang ngày hôm sau
+    const next = new Date(date.getTime() + 24 * 3600 * 1000);
+    day = String(next.getUTCDate()).padStart(2, "0");
+  }
+
+  hh = String(hh).padStart(2, "0");
+  const mi = String(d.getUTCMinutes()).padStart(2, "0");
+  const ss = String(d.getUTCSeconds()).padStart(2, "0");
+
+  return `${yyyy}/${mm}/${day} ${hh}:${mi}:${ss}`;
 }

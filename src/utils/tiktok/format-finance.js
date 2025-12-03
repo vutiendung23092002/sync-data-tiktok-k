@@ -23,7 +23,7 @@ export function formatTikTokTransactionFull(trx = {}) {
     transaction_id: trx.id || "",
     order_id: trx.order_id ? trx.order_id : trx.adjustment_order_id || null,
     order_create_time: trx.order_create_time
-      ? utils.utcTimestampToVnMutilTimezone(trx.order_create_time)
+      ? utils.utcTimestampToVn(trx.order_create_time)
       : null,
     type: trx.type || "",
     shop_id: trx.shop_id || "",
@@ -117,7 +117,7 @@ export function formatTikTokTransactionFull(trx = {}) {
 
     statement_id: trx.statement_id || "",
     statement_time: trx.statement_time
-      ? utils.utcTimestampToVnMutilTimezone(trx.statement_time)
+      ? utils.utcTimestampToVn(trx.statement_time)
       : null,
 
     // ===== SHIPPING.SUPPLEMENTARY =====

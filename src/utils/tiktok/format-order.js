@@ -1,5 +1,3 @@
-// import { utcTimestampToVnMutilTimezone } from "./timeHelper.js";
-// import { generateHash } from "../utils/generateHash.js";
 import * as utils from "../index.js";
 
 /**
@@ -15,9 +13,9 @@ export function formatTikTokOrder(order = {}) {
     order_id: order.id || "",
     tracking_number: order.tracking_number || "",
     create_time: order.create_time
-      ? utils.utcTimestampToVnMutilTimezone(order.create_time)
+      ? utils.utcTimestampToVn(order.create_time)
       : null,
-    paid_time: order.paid_time ? utils.utcTimestampToVnMutilTimezone(order.paid_time) : null,
+    paid_time: order.paid_time ? utils.utcTimestampToVn(order.paid_time) : null,
     status: order.status || order.status || "",
     total_amount: order.payment?.total_amount ?? 0,
     sub_total: order.payment?.sub_total ?? 0,
@@ -33,18 +31,18 @@ export function formatTikTokOrder(order = {}) {
     handling_fee: order.payment?.handling_fee ?? 0,
     fulfillment_type: order.fulfillment_type || "",
     cancel_order_sla_time: order.cancel_order_sla_time
-      ? utils.utcTimestampToVnMutilTimezone(order.cancel_order_sla_time)
+      ? utils.utcTimestampToVn(order.cancel_order_sla_time)
       : null,
     cancellation_initiator: order.cancellation_initiator || "",
     packages: order.packages || [],
     cancel_time: order.cancel_time
-      ? utils.utcTimestampToVnMutilTimezone(order.cancel_time)
+      ? utils.utcTimestampToVn(order.cancel_time)
       : null,
     delivery_due_time: order.delivery_due_time
-      ? utils.utcTimestampToVnMutilTimezone(order.delivery_due_time)
+      ? utils.utcTimestampToVn(order.delivery_due_time)
       : null,
     delivery_time: order.delivery_time
-      ? utils.utcTimestampToVnMutilTimezone(order.delivery_time)
+      ? utils.utcTimestampToVn(order.delivery_time)
       : null,
     commerce_platform: order.commerce_platform || "",
   };
@@ -72,7 +70,7 @@ export function formatTikTokOrderItem(item = {}, order = {}, productCostMap) {
     order_id: order.id || "",
     tracking_number: item.tracking_number || "",
     create_time: order.create_time
-      ? utils.utcTimestampToVnMutilTimezone(order.create_time)
+      ? utils.utcTimestampToVn(order.create_time)
       : null,
     sku_id: item.sku_id || "",
     seller_sku: item.seller_sku || "",

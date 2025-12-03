@@ -47,7 +47,7 @@ export async function checkAndRefreshAllTokens(appKey, appSecret, dbName, id) {
         access_token_expire_in: result?.data?.access_token_expire_in || "",
         refresh_token: utils.encrypt(result?.data?.refresh_token || ""),
         refresh_token_expire_in: result?.data?.refresh_token_expire_in || "",
-        update_at: utils.utcTimestampToVnMutilTimezone(Math.floor(Date.now() / 1000)),
+        update_at: utils.utcTimestampToVn(Math.floor(Date.now() / 1000)),
       },
       { onConflict: "id" }
     )
