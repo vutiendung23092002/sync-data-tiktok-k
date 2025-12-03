@@ -10,6 +10,7 @@ import { syncDataToLarkBaseFilterDate } from "./src/services/larkbase/index.js";
 import * as utils from "./src/utils/index.js";
 
 async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
+  console.log(`Đồng bộ tài chính từ ngày ${from} đến ${to}`);
   const access_token_tsp = await checkAndRefreshAllTokens(
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
@@ -92,13 +93,10 @@ const baseId = process.env.BASE_ID_TMDT;
 const tableFinanceName = process.env.TABLE_FINANCE_NAME;
 
 // input hoặc env đều đã có yyyy/mm/dd
-const from = process.env.FROM_FINANCE ? `${process.env.FROM_FINANCE} 00:00:00` : null;
+const from = process.env.FROM_FINANCE
+  ? `${process.env.FROM_FINANCE} 00:00:00`
+  : null;
 
-const to = process.env.TO_FINANCE  ? `${process.env.TO_FINANCE } 23:59:59` : null;
+const to = process.env.TO_FINANCE ? `${process.env.TO_FINANCE} 23:59:59` : null;
 
-syncFinanceTiktok(
-  baseId,
-  tableFinanceName,
-  from,
-  to
-);
+syncFinanceTiktok(baseId, tableFinanceName, from, to);
