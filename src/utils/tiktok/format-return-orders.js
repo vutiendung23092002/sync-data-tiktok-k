@@ -9,8 +9,8 @@ export function formatTikTokReturnOrder(r = {}) {
     is_combined_return: !!r.is_combined_return,
 
     // Time
-    create_time: r.create_time ? utils.utcToVNTime(r.create_time) : null,
-    update_time: r.update_time ? utils.utcToVNTime(r.update_time) : null,
+    create_time: r.create_time ? utils.utcTimestampToVnMutilTimezone(r.create_time) : null,
+    update_time: r.update_time ? utils.utcTimestampToVnMutilTimezone(r.update_time) : null,
 
     // Return Info
     return_type: r.return_type || "",
