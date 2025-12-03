@@ -42,8 +42,8 @@ async function syncOrdersTiktok(
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
     access_token_tsp,
-    from,
-    to,
+    utils.vnTimeToUtcTimestamp(from),
+    utils.vnTimeToUtcTimestamp(to),
     shops
   );
 

@@ -35,8 +35,8 @@ export async function getAllOrdersTiktok(
       };
 
       const body = {
-        create_time_ge: utils.vnTimeToUTCTimestampRaw(from),
-        create_time_lt: utils.vnTimeToUTCTimestampRaw(to),
+        create_time_ge: from,
+        create_time_lt: to,
       };
 
       const sign = utils.generateTikTokSignSmart({

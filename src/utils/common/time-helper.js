@@ -128,3 +128,31 @@ export function toTikTokGmvDateFormat(inputStr) {
 export function toIsoLike(inputStr) {
   return inputStr.replace(/\//g, "-").replace(" ", "T");
 }
+
+export function vnTimeToUtcTimestamp(datetimeStr) {
+  // Chuyển "YYYY/MM/DD HH:mm:ss" => ["YYYY", "MM", "DD", "HH", "mm", "ss"]
+  const [datePart, timePart] = datetimeStr.split(" ");
+  const [year, month, day] = datePart.split(/[-/]/).map(Number);
+  const [hour, minute, second] = timePart.split(":").map(Number);
+
+  // Vì đây là giờ VIỆT NAM => ta convert sang UTC bằng cách -7 giờ
+  const utcMillis = Date.UTC(year, month - 1, day, hour - 7, minute, second);
+
+  return Math.floor(utcMillis / 1000);
+}
+
+export function utcTimestampToVn(utcSec) {
+  const date = new Date(utcSec * 1000);
+  const vnMillis = date.getTime() + 7 * 3600 * 1000;
+  const vn = new Date(vnMillis);
+
+  const yyyy = vn.getUTCFullYear();
+  const mm = String(vn.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(vn.getUTCDate()).padStart(2, "0");
+  const hh = String(vn.getUTCHours()).padStart(2, "0");
+  const mi = String(vn.getUTCMinutes()).padStart(2, "0");
+  const ss = String(vn.getUTCSeconds()).padStart(2, "0");
+
+  return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
+}
+
