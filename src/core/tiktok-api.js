@@ -71,7 +71,7 @@ export async function getAuthorizedShops(headers, params, path) {
  * Tìm kiếm danh sách đơn hàng (order/search).
  *
  * @param {string} path - path của endpoint get order list.
- * @param {JSON} params 
+ * @param {JSON} params
  *               app_key: App Key TikTok Shop,
  *               timestamp: current time,
  *               sort_order: "DESC" sắp xếp theo sort_field từ lớn - bé (ASC ngc lại),
@@ -79,7 +79,7 @@ export async function getAuthorizedShops(headers, params, path) {
  *               shop_cipher: shop.cipher - mã cipher của shop,
  *               page_token: id của trang cần lấy (100 order 1 trang)
  *               sign: chữ ký
- * @param {JSON} headers 
+ * @param {JSON} headers
  *               "x-tts-access-token": access_token tiktok shop,
  *               "Content-Type": "application/json",
  * @param {JSON} body
@@ -100,56 +100,16 @@ export async function getOrdersList(path, params, headers, body) {
 /**
  * Lấy danh sách bảng kê (statements) của shop.
  *
- * @param {string} accessToken - Token truy cập shop.
- * @param {string} appKey - App Key.
- * @param {string} appSecret - Secret Key.
- * @param {number} pageSize - Số record mỗi trang.
- * @param {string} sortOrder - ASC / DESC.
- * @param {string|null} pageToken - Page token.
- * @param {string} sortField - Trường sắp xếp (statement_time,...)
- * @param {string} shopCipher - Mã shop.
- * @param {number} statementTimeGe - Timestamp >=.
- * @param {number} statementTimeLt - Timestamp <.
+ * @param {string} path - path get statement.
+ * @param {JSON} params - params.
+ * @param {JSON} headers - headers.
  * @returns {Promise<Object>} Danh sách statement.
  */
-export async function getStatements(
-  accessToken,
-  appKey,
-  appSecret,
-  pageSize,
-  sortOrder,
-  pageToken,
-  sortField,
-  shopCipher,
-  statementTimeGe,
-  statementTimeLt
-) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_STATEMENT;
-  const params = {
-    app_key: appKey,
-    timestamp,
-    page_size: pageSize,
-    sort_order: sortOrder,
-    sort_field: sortField,
-    shop_cipher: shopCipher,
-    statement_time_ge: statementTimeGe,
-    statement_time_lt: statementTimeLt,
-  };
-
-  if (pageToken) params.page_token = pageToken;
-
-  const sign = generateTikTokSignSmart({
-    appSecret,
-    path,
-    params,
-    method: "GET",
-  });
-
+export async function getStatements(path, params, headers) {
   const res = await http.get(path, {
     baseURL: TIKTOK_BASE_URL,
-    headers: { "x-tts-access-token": accessToken },
-    params: { ...params, sign },
+    headers: headers,
+    params: params,
   });
 
   return res;
@@ -158,101 +118,16 @@ export async function getStatements(
 /**
  * Lấy danh sách giao dịch thuộc một statement.
  *
- * @param {string} accessToken - Token truy cập shop.
- * @param {string} appKey - App Key.
- * @param {string} appSecret - Secret Key.
- * @param {number} pageSize - Số record mỗi trang.
- * @param {string} sortOrder - Sắp xếp.
- * @param {string|null} pageToken - Trang tiếp theo.
- * @param {string} sortField - Trường sắp xếp.
- * @param {string} shopCipher - Mã shop.
- * @param {string} statementId - ID bảng kê.
+ * @param {string} path - path get transaction by statement.
+ * @param {JSON} params - params.
+ * @param {JSON} headers - headers.
  * @returns {Promise<Object>} Transaction listing.
  */
-export async function getTransactionByStatement(
-  accessToken,
-  appKey,
-  appSecret,
-  pageSize,
-  sortOrder,
-  pageToken,
-  sortField,
-  shopCipher,
-  statementId
-) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_TRANSACTION_BY_STATEMENT.replace(
-    "{statement_id}",
-    statementId
-  );
-
-  const params = {
-    app_key: appKey,
-    timestamp,
-    page_size: pageSize,
-    sort_order: sortOrder,
-    sort_field: sortField,
-    shop_cipher: shopCipher,
-  };
-
-  if (pageToken) params.page_token = pageToken;
-
-  const sign = generateTikTokSignSmart({
-    appSecret,
-    path,
-    params,
-    method: "GET",
-  });
-
+export async function getTransactionByStatement(path, params, headers) {
   const res = await http.get(path, {
     baseURL: TIKTOK_BASE_URL,
-    headers: { "x-tts-access-token": accessToken },
-    params: { ...params, sign },
-  });
-
-  return res;
-}
-
-/**
- * Lấy giao dịch tài chính theo order_id (chỉ 1 đơn).
- *
- * @param {string} accessToken
- * @param {string} appKey
- * @param {string} appSecret
- * @param {string} shopCipher
- * @param {string} orderId
- * @returns {Promise<Object>} Danh sách transaction của đơn hàng.
- */
-export async function getTransactionByOrder(
-  accessToken,
-  appKey,
-  appSecret,
-  shopCipher,
-  orderId
-) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS_TIKTOK.TIKTOK_FINANCE_TRANSACTION_BY_ORDER.replace(
-    "{order_id}",
-    orderId
-  );
-
-  const params = {
-    app_key: appKey,
-    timestamp,
-    shop_cipher: shopCipher,
-  };
-
-  const sign = generateTikTokSignSmart({
-    appSecret,
-    path,
-    params,
-    method: "GET",
-  });
-
-  const res = await http.get(path, {
-    baseURL: TIKTOK_BASE_URL,
-    headers: { "x-tts-access-token": accessToken },
-    params: { ...params, sign },
+    headers: headers,
+    params: params,
   });
 
   return res;

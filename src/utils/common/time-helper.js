@@ -84,3 +84,10 @@ export function utcTimestampToVn(ts) {
 
   return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
 }
+
+
+export function vnTimeToUTCTimestampRaw(datetimeStr) {
+  const normalized = datetimeStr.replace(/\//g, "-");
+  const dateVN = new Date(normalized);
+  return Math.floor(dateVN.getTime() / 1000);
+}

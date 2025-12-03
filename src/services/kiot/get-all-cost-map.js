@@ -9,8 +9,16 @@ export async function getAllCostMap() {
       getAccessTokenEnvCloud(client_id, client_secret)
     );
 
-    const products = await utils.callWithRetry(() =>
-      fetchAllProducts(accessToken, { includeInventory: true }, 100, retailer)
+    const products = await utils.callWithRetry(
+      () =>
+        fetchAllProducts(
+          accessToken,
+          { includeInventory: true },
+          100,
+          retailer
+        ),
+      100,
+      1000
     );
 
     const map = {};
