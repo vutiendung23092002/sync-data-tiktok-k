@@ -8,17 +8,17 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
-      A_TB_FINANCE:
+      TABLE_NAME:
         description: "Tên bảng finance"
         required: true
         type: string
 
-      A_FROM_FINANCE:
+      FROM:
         description: "Từ ngày (YYYY/MM/DD)"
         required: true
         type: string
 
-      A_TO_FINANCE:
+      TO:
         description: "Đến ngày (YYYY/MM/DD)"
         required: true
         type: string
@@ -26,7 +26,7 @@ on:
 jobs:
   sync-finance-job:
     runs-on: ubuntu-latest
-    environment: sync-data-tiktok-k
+    environment: sync-finance
 
     steps:
       - name: Checkout source
@@ -42,16 +42,15 @@ jobs:
 
       - name: Run sync-finance-k.js
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_SERVICE_KEY: ${{ secrets.DATABASE_SERVICE_KEY }}
           AES_256_CBC_APP_SECRET_KEY: ${{ secrets.AES_256_CBC_APP_SECRET_KEY }}
           TIKTOK_PARTNER_APP_KEY_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_KEY_7561567100864644872 }}
           TIKTOK_PARTNER_APP_SECRET_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_SECRET_7561567100864644872 }}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_ID: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_ID }}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET }}
-          BASE_ID_TMDT: ${{ secrets.BASE_ID_TMDT }}
-          A_TB_FINANCE: ${{ inputs.A_TB_FINANCE || vars.A_TB_FINANCE }}
-          A_FROM_FINANCE: ${{inputs.A_FROM_FINANCE || vars.A_FROM_FINANCE }}
-          A_TO_FINANCE: ${{ inputs.A_TO_FINANCE || vars.A_TO_FINANCE }}
+          BASE_ID_TMDT: ${{ vars.BASE_ID_TMDT }}
+          TABLE_NAME: ${{ inputs.TABLE_NAME || vars.TABLE_NAME }}
+          FROM: ${{ inputs.FROM || vars.FROM }}
+          TO: ${{ inputs.TO || vars.TO }}
 
         run: node sync-finance-k.js
