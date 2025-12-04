@@ -134,69 +134,20 @@ export async function getTransactionByStatement(path, params, headers) {
 }
 
 /**
- * Tìm kiếm danh sách yêu cầu trả hàng / hoàn tiền.
+ * Lấy danh sách giao dịch thuộc một statement.
  *
- * @param {string} accessToken - Token truy cập shop.
- * @param {string} appKey - App Key.
- * @param {string} appSecret - Secret Key.
- * @param {string} sortField - Trường sắp xếp. mặc định: create_time
- * @param {string} sortOrder - ASC/DESC. Mặc định: ASC
- * @param {number} pageSize - Số bản ghi mỗi trang.
- * @param {string|null} pageToken - Page token nếu có.
- * @param {string} shopCipher - Mã shop.
- * @param {number} createTimeGe - Timestamp >=.
- * @param {number} createTimeLt - Timestamp <.
- * @returns {Promise<Object>} Danh sách yêu cầu trả hàng.
+ * @param {string} path - path get transaction by statement.
+ * @param {JSON} params - params.
+ * @param {JSON} headers - headers.
+ * @param {JSON} body - body.
+ * @returns {Promise<Object>} Transaction listing.
  */
-export async function searchReturns(
-  accessToken,
-  appKey,
-  appSecret,
-  sortField,
-  sortOrder,
-  pageSize,
-  pageToken,
-  shopCipher,
-  createTimeGe,
-  createTimeLt
-) {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const path = API_PATHS_TIKTOK.TIKTOK_SEARCH_RETURNS_REFUND;
-
-  const params = {
-    app_key: appKey,
-    timestamp,
-    page_size: pageSize,
-    sort_order: sortOrder,
-    sort_field: sortField,
-    shop_cipher: shopCipher,
-  };
-
-  if (pageToken) params.page_token = pageToken;
-
-  const body = {
-    create_time_ge: createTimeGe,
-    create_time_lt: createTimeLt,
-  };
-
-  const sign = generateTikTokSignSmart({
-    appSecret,
-    path,
-    params,
-    body,
-    method: "POST",
-  });
-
+export async function searchReturns(path, params, headers, body) {
   const res = await http.post(path, body, {
     baseURL: TIKTOK_BASE_URL,
-    headers: {
-      "x-tts-access-token": accessToken,
-      "Content-Type": "application/json",
-    },
-    params: { ...params, sign },
+    headers: headers,
+    params: params,
   });
-
-  console.log(res);
 
   return res;
 }
