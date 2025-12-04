@@ -15,7 +15,7 @@ on:
 
       FROM:
         description: "Từ ngày (YYYY/MM/DD)"
-        required: true
+        required: false
         type: string
 
       TO:
