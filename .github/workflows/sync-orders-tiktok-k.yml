@@ -31,7 +31,7 @@ on:
 jobs:
   sync-orders-job:
     runs-on: ubuntu-latest
-    environment: sync-data-tiktok-k
+    environment: sync-order
 
     steps:
       - name: Checkout source
@@ -47,20 +47,19 @@ jobs:
 
       - name: Run sync-orders-k.js
         env:
-          KIOTVIET_RETAILER: ${{ secrets.KIOTVIET_RETAILER }}
-          KIOT_CLIENT_ID: ${{ secrets.KIOT_CLIENT_ID }}
-          KIOT_SECRET: ${{ secrets.KIOT_SECRET }}
-          KIOTVIET_RETAILER_OLD: ${{ secrets.KIOTVIET_RETAILER_OLD}}
-          KIOT_CLIENT_ID_OLD: ${{ secrets.KIOT_CLIENT_ID_OLD }}
-          KIOT_SECRET_OLD: ${{ secrets.KIOT_SECRET_OLD}}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_SERVICE_KEY: ${{ secrets.DATABASE_SERVICE_KEY }}
           AES_256_CBC_APP_SECRET_KEY: ${{ secrets.AES_256_CBC_APP_SECRET_KEY }}
-          TIKTOK_PARTNER_APP_KEY_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_KEY_7561567100864644872 }}
-          TIKTOK_PARTNER_APP_SECRET_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_SECRET_7561567100864644872 }}
+          DATABASE_SERVICE_KEY: ${{ secrets.DATABASE_SERVICE_KEY }}
+          KIOTVIET_RETAILER: ${{ secrets.KIOTVIET_RETAILER }}
+          KIOTVIET_RETAILER_OLD: ${{ secrets.KIOTVIET_RETAILER_OLD}}
+          KIOT_CLIENT_ID: ${{ secrets.KIOT_CLIENT_ID }}
+          KIOT_CLIENT_ID_OLD: ${{ secrets.KIOT_CLIENT_ID_OLD }}
+          KIOT_SECRET: ${{ secrets.KIOT_SECRET }}
+          KIOT_SECRET_OLD: ${{ secrets.KIOT_SECRET_OLD}}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_ID: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_ID }}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET }}
-          BASE_ID_TMDT: ${{ secrets.BASE_ID_TMDT }}
+          TIKTOK_PARTNER_APP_KEY_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_KEY_7561567100864644872 }}
+          TIKTOK_PARTNER_APP_SECRET_7561567100864644872: ${{ secrets.TIKTOK_PARTNER_APP_SECRET_7561567100864644872 }}
+          BASE_ID_TMDT: ${{ vars.BASE_ID_TMDT }}
           TABLE_ORDERS_NAME: ${{ inputs.TABLE_ORDERS_NAME || vars.TABLE_ORDERS_NAME }}
           TABLE_ORDER_ITEMS_NAME: ${{ inputs.TABLE_ORDER_ITEMS_NAME || vars.TABLE_ORDER_ITEMS_NAME }}
           FROM: ${{ inputs.FROM || vars.FROM }}
