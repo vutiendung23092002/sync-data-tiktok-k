@@ -26,7 +26,7 @@ on:
 jobs:
   sync-finance-job:
     runs-on: ubuntu-latest
-    environment: sync-data-tiktok-kladycare
+    environment: sync-data-tiktok-k
 
     steps:
       - name: Checkout source
