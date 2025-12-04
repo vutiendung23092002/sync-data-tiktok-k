@@ -49,8 +49,8 @@ jobs:
           LARK_TIKTOK_K_ORDER_ITEMS_APP_ID: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_ID }}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET }}
           BASE_ID_TMDT: ${{ vars.BASE_ID_TMDT }}
-          TABLE_NAME: ${{ inputs.TABLE_NAME || vars.TABLE_NAME }}
-          FROM: ${{ inputs.FROM || vars.FROM }}
-          TO: ${{ inputs.TO || vars.TO }}
+          TABLE_NAME: ${{ inputs.TABLE_NAME != '' && inputs.TABLE_NAME || vars.TABLE_NAME }}
+          FROM: ${{ inputs.FROM != '' && inputs.FROM || vars.FROM }}
+          TO: ${{ inputs.TO != '' && inputs.TO || vars.TO }}
 
         run: node sync-finance-k.js
