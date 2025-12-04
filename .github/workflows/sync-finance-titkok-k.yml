@@ -10,7 +10,7 @@ on:
     inputs:
       TABLE_NAME:
         description: "Tên bảng finance"
-        required: true
+        required: false
         type: string
 
       FROM:
@@ -20,7 +20,7 @@ on:
 
       TO:
         description: "Đến ngày (YYYY/MM/DD)"
-        required: true
+        required: false
         type: string
 
 jobs:
