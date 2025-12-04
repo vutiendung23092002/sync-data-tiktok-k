@@ -3,6 +3,7 @@ import { createLarkClient } from "./src/core/larkbase-client.js";
 import { checkAndRefreshAllTokens } from "./src/services/tiktok/refresh-access-token.js";
 import { getTiktokShopInfo } from "./src/services/tiktok/get-all-shop-info.js";
 import { getAllOrdersReturn } from "./src/services/tiktok/get-all-return-orders.js";
+import { syncDataToLarkBaseFilterDate } from "./src/services/larkbase/index.js";
 import * as utils from "./src/utils/index.js";
 
 async function syncReturnRefunTiktok(baseId, tableReturnRefun, from, to) {
