@@ -8,17 +8,17 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
-      TABLE_FINANCE_NAME:
+      A_TB_FINANCE:
         description: "Tên bảng finance"
         required: true
         type: string
 
-      FROM_FINANCE:
+      A_FROM_FINANCE:
         description: "Từ ngày (YYYY/MM/DD)"
         required: true
         type: string
 
-      TO_FINANCE:
+      A_TO_FINANCE:
         description: "Đến ngày (YYYY/MM/DD)"
         required: true
         type: string
@@ -50,8 +50,8 @@ jobs:
           LARK_TIKTOK_K_ORDER_ITEMS_APP_ID: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_ID }}
           LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET: ${{ secrets.LARK_TIKTOK_K_ORDER_ITEMS_APP_SECRET }}
           BASE_ID_TMDT: ${{ secrets.BASE_ID_TMDT }}
-          TABLE_FINANCE_NAME: ${{inputs.TABLE_FINANCE_NAME || vars.TABLE_FINANCE_NAME }}
-          FROM_FINANCE: ${{ inputs.FROM_FINANCE || vars.FROM_FINANCE }}
-          TO_FINANCE: ${{ inputs.TO_FINANCE || vars.TO_FINANCE }}
+          A_TB_FINANCE: ${{ inputs.A_TB_FINANCE || vars.A_TB_FINANCE }}
+          A_FROM_FINANCE: ${{inputs.A_FROM_FINANCE || vars.A_FROM_FINANCE }}
+          A_TO_FINANCE: ${{ inputs.A_TO_FINANCE || vars.A_TO_FINANCE }}
 
         run: node sync-finance-k.js
