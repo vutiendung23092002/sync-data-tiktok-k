@@ -74,7 +74,7 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
     larkFinanceClient,
     baseId,
     {
-      tableName: "tetsFinance",
+      tableName: tableFinanceName,
       records: txFormated,
       fieldMap: utils.TRANSACTION_FIELD_MAP,
       typeMap: utils.TRANSACTION_TYPE_MAP,
