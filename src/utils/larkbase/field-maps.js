@@ -208,8 +208,8 @@ export const TRANSACTION_FIELD_MAP = {
   shipping_cost_amount: "Phí ship người bán",
   customer_payment_amount: "Khách hàng thanh toán",
   customer_refund_amount: "Hoàn tiền cho khách",
-  platform_cofunded_discount_amount: "Giảm giá đồng tài trợ (Sàn)",
-  platform_cofunded_discount_refund_amount: "Hoàn giảm giá đồng tài trợ (Sàn)",
+  platform_cofunded_discount_amount: "Phí CFV (Sàn)",
+  platform_cofunded_discount_refund_amount: "Hoàn phí CFV (Sàn)",
   platform_discount_amount: "Giảm giá sàn",
   platform_discount_refund_amount: "Hoàn giảm giá sàn",
   retail_delivery_fee_amount: "Phí giao hàng bán lẻ",
@@ -218,9 +218,8 @@ export const TRANSACTION_FIELD_MAP = {
   sales_tax_amount: "Thuế bán hàng",
   sales_tax_payment_amount: "Thanh toán thuế bán hàng",
   sales_tax_refund_amount: "Hoàn thuế bán hàng",
-  seller_cofunded_discount_amount: "Giảm giá đồng tài trợ (Người bán)",
-  seller_cofunded_discount_refund_amount:
-    "Hoàn giảm giá đồng tài trợ (Người bán)",
+  seller_cofunded_discount_amount: "Phí CFV (Người bán)",
+  seller_cofunded_discount_refund_amount: "Hoàn phí CFV (Người bán)",
   subtotal_before_discount_amount: "Tổng tiền tạm tính trước giảm giá",
   refund_subtotal_before_discount_amount: "Hoàn tiền trước giảm giá",
   seller_discount_amount: "Giảm giá người bán",
@@ -797,7 +796,7 @@ export const ORDER_FB_FIELD_MAP = {
   is_livestream: "Đơn livestream",
   is_live_shopping: "Đơn Live Shopping",
   received_at_shop: "Đã nhận tại shop",
-  hash: "hash"
+  hash: "hash",
 };
 
 export const ORDER_FB_TYPE_MAP = {
@@ -875,5 +874,5 @@ export const ORDER_FB_UI_TYPE_MAP = {
   is_livestream: "Text",
   is_live_shopping: "Text",
   received_at_shop: "Text",
-  hash: "Text"
+  hash: "Text",
 };
