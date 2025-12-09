@@ -32,7 +32,7 @@ export async function checkAndRefreshAllTokens(appKey, appSecret, dbName, id) {
   const params = {
     app_key: appKey,
     app_secret: appSecret,
-    refresh_token: utils.decrypt(data?.refresh_token),
+    refresh_token: utils.decrypt(resSeclect?.refresh_token),
     grant_type: "refresh_token",
   };
 
