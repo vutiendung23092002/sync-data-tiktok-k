@@ -54,6 +54,7 @@ async function syncReturnRefunTiktok(baseId, tableReturnRefun, from, to) {
       uiType: utils.RETURN_ORDER_UI_TYPE_MAP,
       currencyCode: "VND",
       idLabel: "ID định danh (TTS)",
+      excludeUpdateField: [],
     },
     "Ngày tạo",
     timestampFrom,

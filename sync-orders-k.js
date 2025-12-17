@@ -104,7 +104,7 @@ async function syncOrdersTiktok(
       uiType: utils.ORDER_ITEM_UI_TYPE_MAP,
       currencyCode: "VND",
       idLabel: "ID định danh (TTS)",
-      excludeUpdateField: "Giá vốn",
+      excludeUpdateField: ["Giá vốn", "Mã sản phẩm"],
     },
     "Ngày tạo đơn",
     timestampFrom,

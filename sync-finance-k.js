@@ -80,6 +80,7 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
       uiType: utils.TRANSACTION_UI_TYPE_MAP,
       currencyCode: "VND",
       idLabel: "ID định danh (TTS)",
+      excludeUpdateField: [],
     },
     "Ngày quyết toán",
     timestampFrom,
