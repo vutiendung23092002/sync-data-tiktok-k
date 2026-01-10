@@ -5,7 +5,7 @@ name: Nodejs sync return refun tiktok k
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/20 * * * *"
   workflow_dispatch:
     inputs:
       TABLE_NAME:
