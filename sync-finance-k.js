@@ -24,12 +24,21 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
     access_token_tsp,
   );
 
+  const { start: startFi, end: endFi } = utils.expandDateRangeByDay(
+    from,
+    to,
+    5,
+    5,
+  );
+
+  console.log(startFi, endFi);
+
   const statements = await getAllStatement(
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
     access_token_tsp,
-    utils.vnTimeToUtcTimestamp(from),
-    utils.vnTimeToUtcTimestamp(to),
+    utils.vnTimeToUtcTimestamp(startFi),
+    utils.vnTimeToUtcTimestamp(endFi),
     shops,
   );
 
@@ -49,10 +58,10 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
 
   console.log(transactions.length);
 
-  utils.writeJsonFile(
-    "./src/data/all_transactions_statements.json",
-    transactions
-  );
+  // utils.writeJsonFile(
+  //   "./src/data/all_transactions_statements.json",
+  //   transactions
+  // );
 
   const txFormated = transactions.map((tx) =>
     utils.formatTikTokTransactionFull(tx),
