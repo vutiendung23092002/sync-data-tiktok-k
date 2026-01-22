@@ -15,22 +15,22 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
     "envCloud", // Tên bảng lưu thông tin token trên supabase
-    2
+    2,
   );
 
   const shops = await getTiktokShopInfo(
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
-    access_token_tsp
+    access_token_tsp,
   );
 
   const statements = await getAllStatement(
     env.TIKTOK.shop_han_korea_7561567100864644872.app_key,
     env.TIKTOK.shop_han_korea_7561567100864644872.app_secret,
     access_token_tsp,
-    utils.vnTimeToUtcTimestamp(from) - 24 * 60 * 60,
-    utils.vnTimeToUtcTimestamp(to) + 24 * 60 * 60,
-    shops
+    utils.vnTimeToUtcTimestamp(from),
+    utils.vnTimeToUtcTimestamp(to),
+    shops,
   );
 
   console.log(statements.length);
@@ -44,25 +44,25 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
     shops,
     statements,
     utils.vnTimeToUtcTimestamp(from),
-    utils.vnTimeToUtcTimestamp(to)
+    utils.vnTimeToUtcTimestamp(to),
   );
 
   console.log(transactions.length);
 
-  // utils.writeJsonFile(
-  //   "./src/data/all_transactions_statements.json",
-  //   transactions
-  // );
-
-  const txFormated = transactions.map((tx) =>
-    utils.formatTikTokTransactionFull(tx)
+  utils.writeJsonFile(
+    "./src/data/all_transactions_statements.json",
+    transactions
   );
 
-  // utils.writeJsonFile("./src/data/all_transactions_formatted.json", txFormated);
+  const txFormated = transactions.map((tx) =>
+    utils.formatTikTokTransactionFull(tx),
+  );
+
+  utils.writeJsonFile("./src/data/all_transactions_formatted.json", txFormated);
 
   const larkFinanceClient = await createLarkClient(
     env.LARK.tiktok_k_orders_items.app_id,
-    env.LARK.tiktok_k_orders_items.app_secret
+    env.LARK.tiktok_k_orders_items.app_secret,
   );
 
   const ONE_DAY = 24 * 60 * 60 * 1000; // ms
@@ -84,7 +84,7 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
     },
     "Ngày quyết toán",
     timestampFrom,
-    timestampTo
+    timestampTo,
   );
 }
 
