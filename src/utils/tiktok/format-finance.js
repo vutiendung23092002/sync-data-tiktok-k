@@ -126,6 +126,7 @@ export function formatTikTokTransactionFull(trx = {}) {
     ),
 
     adjustment_amount: Number(trx.adjustment_amount) || 0,
+    total_fee: Number(trx.fee_tax_amount || 0) + Number(trx.shipping_cost_amount || 0),
   };
 
   const hash = utils.generateHash(formatted);

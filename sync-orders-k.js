@@ -57,11 +57,11 @@ async function syncOrdersTiktok(
     )
   );
 
-  // utils.writeJsonFile("./src/data/all_orders_formatted.json", allOrders);
-  // utils.writeJsonFile(
-  //   "./src/data/all_order_items_formatted.json",
-  //   allOrderItems
-  // );
+  utils.writeJsonFile("./src/data/all_orders_formatted.json", allOrders);
+  utils.writeJsonFile(
+    "./src/data/all_order_items_formatted.json",
+    allOrderItems
+  );
 
   console.log(
     `Lấy được ${allOrders.length} đơn hàng | ${allOrderItems.length} item đơn hàng!\n`
