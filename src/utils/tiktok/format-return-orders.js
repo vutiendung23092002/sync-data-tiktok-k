@@ -1,6 +1,12 @@
 import * as utils from "../index.js";
 
 export function formatTikTokReturnOrder(r = {}) {
+  const returnLineItemsText = Array.isArray(r.return_line_items)
+    ? r.return_line_items
+        .map((item) => `${item.product_name || ""} x1`)
+        .join("\n")
+    : "";
+
   const formatted = {
     id: `${r.return_id || ""}${r.shop_id ? "_" + r.shop_id : ""}`,
     return_id: r.return_id || "",
@@ -16,6 +22,7 @@ export function formatTikTokReturnOrder(r = {}) {
     return_type: r.return_type || "",
     return_method: r.return_method || "",
     return_status: r.return_status || "",
+    return_line_items: returnLineItemsText,
     // return_reason: r.return_reason || "",
     return_reason_text: r.return_reason_text || "",
     return_tracking_number: r.return_tracking_number || "",
@@ -41,18 +48,32 @@ export function formatTikTokReturnOrder(r = {}) {
     refund_total: Number(r.refund_amount?.refund_total ?? 0),
 
     // Discount array (lấy item đầu tiên)
-    product_platform_discount: Number(r.discount_amount?.[0]?.product_platform_discount ?? 0),
-    product_seller_discount: Number(r.discount_amount?.[0]?.product_seller_discount ?? 0),
-    shipping_fee_platform_discount: Number(r.discount_amount?.[0]?.shipping_fee_platform_discount ?? 0),
-    shipping_fee_seller_discount: Number(r.discount_amount?.[0]?.shipping_fee_seller_discount ?? 0),
+    product_platform_discount: Number(
+      r.discount_amount?.[0]?.product_platform_discount ?? 0,
+    ),
+    product_seller_discount: Number(
+      r.discount_amount?.[0]?.product_seller_discount ?? 0,
+    ),
+    shipping_fee_platform_discount: Number(
+      r.discount_amount?.[0]?.shipping_fee_platform_discount ?? 0,
+    ),
+    shipping_fee_seller_discount: Number(
+      r.discount_amount?.[0]?.shipping_fee_seller_discount ?? 0,
+    ),
 
     // Shipping fee array
-    buyer_paid_return_shipping_fee: Number(r.shipping_fee_amount?.[0]?.buyer_paid_return_shipping_fee ?? 0),
-    platform_paid_return_shipping_fee: Number(r.shipping_fee_amount?.[0]?.platform_paid_return_shipping_fee ?? 0),
-    seller_paid_return_shipping_fee: Number(r.shipping_fee_amount?.[0]?.seller_paid_return_shipping_fee ?? 0),
+    buyer_paid_return_shipping_fee: Number(
+      r.shipping_fee_amount?.[0]?.buyer_paid_return_shipping_fee ?? 0,
+    ),
+    platform_paid_return_shipping_fee: Number(
+      r.shipping_fee_amount?.[0]?.platform_paid_return_shipping_fee ?? 0,
+    ),
+    seller_paid_return_shipping_fee: Number(
+      r.shipping_fee_amount?.[0]?.seller_paid_return_shipping_fee ?? 0,
+    ),
 
     // raw arrays (giữ lại nếu ông muốn ghi file)
-    return_line_items: r.return_line_items || [],
+    // return_line_items: r.return_line_items || [],
     discount_amount_raw: r.discount_amount || [],
     shipping_fee_amount_raw: r.shipping_fee_amount || [],
   };
