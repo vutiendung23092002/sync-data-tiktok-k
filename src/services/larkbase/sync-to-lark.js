@@ -194,7 +194,7 @@ export async function syncDataToLarkBaseFilterDate(
 
   // Kiểm tra bảng
   const listTb = await larkbaseService.getListTable(client, baseId);
-  const table = listTb?.data?.items?.find((t) => t.name === tableName);
+  const table = listTb.find((t) => t.name === tableName);
   let tableId;
 
   if (table) {

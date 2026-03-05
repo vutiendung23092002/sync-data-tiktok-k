@@ -17,13 +17,45 @@
  *        { data: { items: [...], page_token: null }, ... }
  *    - Trả về null nếu lỗi API (error response)
  */
+// export async function getListTable(client, baseId) {
+//   try {
+//     const res = await client.bitable.appTable.list({
+//       path: { app_token: baseId },
+//       params: { page_size: 100 },
+//     });
+//     return res;
+//   } catch (e) {
+//     console.error("Lỗi Lark API:", e.response?.data || e);
+//     return null;
+//   }
+// }
+
 export async function getListTable(client, baseId) {
+  let pageToken = undefined;
+  let tables = [];
+
   try {
-    const res = await client.bitable.appTable.list({
-      path: { app_token: baseId },
-      params: { page_size: 100 },
-    });
-    return res;
+    do {
+      const res = await client.bitable.appTable.list({
+        path: { app_token: baseId },
+        params: {
+          page_size: 100,
+          page_token: pageToken,
+        },
+      });
+
+      const data = res.data;
+
+      tables.push(...(data.items || []));
+      pageToken = data.page_token;
+
+      if (!data.has_more) break;
+    } while (true);
+
+    // console.log(`Tổng số bảng trong Base ${baseId}: ${tables.length}`);
+    // console.table(tables.map((t) => ({ name: t.name, id: t.table_id })));
+
+    return tables;
   } catch (e) {
     console.error("Lỗi Lark API:", e.response?.data || e);
     return null;
