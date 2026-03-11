@@ -101,6 +101,9 @@ export function formatTikTokTransactionFull(trx = {}) {
     voucher_xtra_service_fee_amount: Number(
       fee.voucher_xtra_service_fee_amount || 0
     ),
+    shipping_fee_guarantee_service_fee: Number(
+      fee.shipping_fee_guarantee_service_fee || 0
+    ),
 
     // ===== TAX BREAKDOWN =====
     pit_amount: Number(tax.pit_amount || 0),

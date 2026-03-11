@@ -47,7 +47,7 @@ async function syncOrdersTiktok(
     shops
   );
 
-  // utils.writeJsonFile("./src/data/all_orders.json", orders);
+  utils.writeJsonFile("./src/data/all_orders.json", orders);
 
   const allOrders = orders.map((o) => utils.formatTikTokOrder(o));
 

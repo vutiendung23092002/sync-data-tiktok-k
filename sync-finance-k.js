@@ -58,10 +58,10 @@ async function syncFinanceTiktok(baseId, tableFinanceName, from, to) {
 
   console.log(transactions.length);
 
-  // utils.writeJsonFile(
-  //   "./src/data/all_transactions_statements.json",
-  //   transactions
-  // );
+  utils.writeJsonFile(
+    "./src/data/all_transactions_statements.json",
+    transactions
+  );
 
   const txFormated = transactions.map((tx) =>
     utils.formatTikTokTransactionFull(tx),
