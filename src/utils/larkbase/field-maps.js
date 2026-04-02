@@ -80,7 +80,7 @@ export const ORDER_TYPE_MAP = {
   handling_fee: 2, // Phí cho người mua
   fulfillment_type: 1,
   cancel_order_sla_time: 5,
-  cancellation_initiator: 5,
+  cancellation_initiator: 1,
   packages: 1,
   cancel_time: 5,
   delivery_due_time: 5,
