@@ -45,6 +45,7 @@ export function formatTikTokOrder(order = {}) {
       ? utils.utcTimestampToVn(order.delivery_time)
       : null,
     commerce_platform: order.commerce_platform || "",
+    shipping_provider: order.shipping_provider || "",
   };
 
   const orderHash = utils.generateHash(formatted);
