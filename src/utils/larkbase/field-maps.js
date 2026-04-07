@@ -54,6 +54,7 @@ export const ORDER_FIELD_MAP = {
   delivery_time: "Thời gian giao hàng",
   commerce_platform: "Nền tảng thương mại",
   shipping_provider: "Đơn vị VC",
+  rts_time: "RTS time", // Thời gian hàng đã sẵn sàng để giao
   id: "ID định danh (TTS)", // ID tổng hợp (order_id_shop_id)
   hash: "hash",
 };
@@ -88,6 +89,7 @@ export const ORDER_TYPE_MAP = {
   delivery_time: 5,
   commerce_platform: 1,
   shipping_provider: 1,
+  rts_time: 5,
   id: 1, // ID tổng hợp (order_id_shop_id)
   hash: 1,
 };
@@ -118,6 +120,7 @@ export const ORDER_UI_TYPE_MAP = {
   delivery_time: "DateTime",
   commerce_platform: "TEXT",
   shipping_provider: "TEXT",
+  rts_time: "DateTime",
   id: "TEXT", // ID tổng hợp (order_id_shop_id)
   hash: "TEXT",
 };

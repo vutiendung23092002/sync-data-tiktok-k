@@ -30,6 +30,11 @@ async function syncReturnRefunTiktok(baseId, tableReturnRefun, from, to) {
     shops
   );
 
+    // utils.writeJsonFile(
+    //   "./src/data/return_raw.json",
+    //   returnOrders
+    // );
+
   const returnOrderFormated = returnOrders.map((tx) =>
     utils.formatTikTokReturnOrder(tx)
   );
