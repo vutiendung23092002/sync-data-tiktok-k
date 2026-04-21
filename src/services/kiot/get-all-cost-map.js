@@ -6,7 +6,7 @@ import * as utils from "../../utils/index.js";
 export async function getAllCostMap() {
   async function fetchCostMap(client_id, client_secret, retailer) {
     const accessToken = await utils.callWithRetry(() =>
-      getAccessTokenEnvCloud(client_id, client_secret)
+      getAccessTokenEnvCloud(client_id, client_secret),
     );
 
     const products = await utils.callWithRetry(
@@ -15,10 +15,10 @@ export async function getAllCostMap() {
           accessToken,
           { includeInventory: true },
           100,
-          retailer
+          retailer,
         ),
       100,
-      1000
+      1000,
     );
 
     const map = {};
@@ -35,14 +35,21 @@ export async function getAllCostMap() {
   const newMap = await fetchCostMap(
     env.KIOT.kiot_new.client_id,
     env.KIOT.kiot_new.client_secret,
-    env.KIOT.kiot_new.retailer
+    env.KIOT.kiot_new.retailer,
   );
 
-  const oldMap = await fetchCostMap(
-    env.KIOT.kiot_old.client_id,
-    env.KIOT.kiot_old.client_secret,
-    env.KIOT.kiot_old.retailer
-  );
+  let oldMap = {};
+
+  try {
+    oldMap = await fetchCostMap(
+      env.KIOT.kiot_old.client_id,
+      env.KIOT.kiot_old.client_secret,
+      env.KIOT.kiot_old.retailer,
+    );
+  } catch (err) {
+    console.log("Không lấy được oldMap:", err.message);
+    oldMap = {};
+  }
 
   // merge: ưu tiên new
   const merged = { ...newMap };
