@@ -101,6 +101,10 @@ export async function searchLarkRecordsFilterDate(
       },
     });
 
+    if (res?.msg !== "success") {
+      throw new Error(`Lark API error: ${res?.msg || "unknown error"}`);
+    }
+
     const items = res?.data?.items || [];
     records.push(...items);
 
